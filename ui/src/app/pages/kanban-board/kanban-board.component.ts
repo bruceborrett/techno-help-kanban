@@ -1,9 +1,11 @@
 import { Component, Input, Pipe, PipeTransform } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
+
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroSquares2x2, heroListBullet, heroPlus } from '@ng-icons/heroicons/outline';
-import { KanbanLane, KanbanLaneComponent } from '../kanban-lane/kanban-lane.component';
-import { KanbanCard, KanbanCardComponent } from '../kanban-card/kanban-card.component';
+
+import { KanbanLane, KanbanLaneComponent } from '../../components/kanban-lane/kanban-lane.component';
+import { KanbanCard, KanbanCardComponent } from '../../components/kanban-card/kanban-card.component';
 
 export interface KanbanBoard {
   id: number
