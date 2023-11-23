@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragAndDropModule, DragEndEvent } from 'angular-draggable-droppable';
 import { AvatarComponent } from '../avatar/avatar.component';
+import { TagComponent } from '../tag/tag.component';
 
 export interface KanbanCard {
   id: number;
@@ -16,13 +17,19 @@ export interface KanbanCard {
 @Component({
   selector: 'app-kanban-card',
   standalone: true,
-  imports: [CommonModule, DragAndDropModule, AvatarComponent],
+  imports: [CommonModule, DragAndDropModule, AvatarComponent, TagComponent],
   templateUrl: './kanban-card.component.html',
   styleUrl: './kanban-card.component.css'
 })
 export class KanbanCardComponent {
   @Input() card!: KanbanCard;
   @Input() borderColor!: string;
+
+  tags = [
+    'bug',
+    'feature',
+    'enhancement',
+  ]
 
   dragEnd(ev: DragEndEvent) {
     console.log(ev)
