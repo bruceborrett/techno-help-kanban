@@ -1,2 +1,10 @@
-<p>dashboard works!</p>
-<p *ngFor="let project of projects | async">{{project.id}} - {{project.title}}</p>
+
+<div class="text-center">
+  <a
+    class="block p-2 hover:bg-gray-200"
+    routerLink="/project/{{project.id}}"
+    *ngFor="let project of projects | async"
+  >
+    {{project.title}}
+  </a>
+</div>
