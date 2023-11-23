@@ -9,4 +9,9 @@ export class KanbanBoardController {
   findAll() {
     return this.kanbanBoardService.findAll();
   }
+
+  @Get(':id')
+  findOne(id: number) {
+    return this.kanbanBoardService.findOne(id);
+  }
 }

@@ -29,6 +29,10 @@ export class KanbanCardService implements OnModuleInit {
     return this.kanbanCardRepository.findOneBy({ id });
   }
 
+  async findByProject(projectId: number): Promise<KanbanCard[]> {
+    return this.kanbanCardRepository.findBy({ projectId });
+  }
+
   async create(card: CreateKanbanCardDto) {
     await this.kanbanCardRepository.save(card);
   }

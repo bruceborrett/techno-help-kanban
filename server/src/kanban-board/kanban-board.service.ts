@@ -22,4 +22,14 @@ export class KanbanBoardService implements OnModuleInit {
   findAll(): Promise<KanbanBoard[]> {
     return this.kanbanBoardRepository.find();
   }
+
+  findOne(id: number): Promise<KanbanBoard> {
+    return this.kanbanBoardRepository.findOne({
+      where: { id },
+      relations: {
+        lanes: true,
+        cards: true,
+      },
+    });
+  }
 }

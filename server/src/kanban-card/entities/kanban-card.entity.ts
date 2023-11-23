@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { KanbanBoard } from 'src/kanban-board/entities/kanban-board.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class KanbanCard {
@@ -8,8 +9,11 @@ export class KanbanCard {
   @Column()
   title: string;
 
+  @ManyToOne(() => KanbanBoard, (board) => board.id)
+  projectId: number;
+
   @Column()
-  lane: number;
+  laneId: number;
 
   @Column()
   order: number;

@@ -22,4 +22,12 @@ export class KanbanLaneService implements OnModuleInit {
   findAll(): Promise<KanbanLane[]> {
     return this.kanbanLaneRepository.find();
   }
+
+  findOne(id: number): Promise<KanbanLane> {
+    return this.kanbanLaneRepository.findOneBy({ id });
+  }
+
+  findByProject(projectId: number): Promise<KanbanLane[]> {
+    return this.kanbanLaneRepository.findBy({ projectId });
+  }
 }

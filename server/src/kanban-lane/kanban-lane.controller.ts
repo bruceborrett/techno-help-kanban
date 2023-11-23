@@ -9,4 +9,14 @@ export class KanbanLaneController {
   findAll() {
     return this.kanbanLaneService.findAll();
   }
+
+  @Get(':id')
+  findOne(id: number) {
+    return this.kanbanLaneService.findOne(id);
+  }
+
+  @Get('project/:projectId')
+  findByProject(projectId: number) {
+    return this.kanbanLaneService.findByProject(projectId);
+  }
 }
