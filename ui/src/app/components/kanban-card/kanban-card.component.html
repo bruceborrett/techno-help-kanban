@@ -1,4 +1,6 @@
 <div mwlDraggable [dropData]="card.id" class="bg-white w-full rounded border-t-4 p-2 cursor-move" [style.borderColor]="borderColor">
-  <p class="font-bold mb-4">{{card.title}}</p>
-  <app-avatar imageUrl="https://i.pravatar.cc/150?img=14" [size]="24" />
+  <p class="text-gray-600 font-bold mb-4">{{card.title}}</p>
+  <p class="text-right text-xs text-gray-400">Start: {{card.startDate | date}}</p>
+  <p class="text-right text-xs text-gray-400">Due: {{card.dueDate | date}}</p>
+  <app-avatar imageUrl="https://i.pravatar.cc/150?img=14" [size]=24 />
 </div>

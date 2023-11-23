@@ -56,7 +56,6 @@ export class KanbanBoardComponent {
   @Input()
   set projectId(projectId: number) {
     this.kanbanService.getProject(projectId).subscribe(async (project) => {
-      console.log(project);
       this.project = project;
     })
   }

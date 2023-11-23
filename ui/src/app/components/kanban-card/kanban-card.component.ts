@@ -7,6 +7,10 @@ export interface KanbanCard {
   id: number;
   title: string;
   laneId: number;
+  assigneeId: number;
+  description: string;
+  dueDate: string;
+  startDate: string;
 }
 
 @Component({
