@@ -1,1 +1,3 @@
-export class CreateKanbanBoardDto {}
+export class CreateKanbanBoardDto {
+  title: string;
+}

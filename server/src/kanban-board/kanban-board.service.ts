@@ -1,26 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { CreateKanbanBoardDto } from './dto/create-kanban-board.dto';
-import { UpdateKanbanBoardDto } from './dto/update-kanban-board.dto';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { KanbanBoard } from './entities/kanban-board.entity';
+import { KanbanBoardSeed } from './kanban-board.seed';
 
 @Injectable()
-export class KanbanBoardService {
-  create(createKanbanBoardDto: CreateKanbanBoardDto) {
-    return 'This action adds a new kanbanBoard';
+export class KanbanBoardService implements OnModuleInit {
+  constructor(
+    @InjectRepository(KanbanBoard)
+    private kanbanBoardRepository: Repository<KanbanBoard>,
+  ) {}
+
+  // Seed the database with some data
+  async onModuleInit() {
+    const existing = await this.findAll();
+    if (existing.length == 0) {
+      this.kanbanBoardRepository.save(KanbanBoardSeed);
+    }
   }
 
-  findAll() {
-    return `This action returns all kanbanBoard`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} kanbanBoard`;
-  }
-
-  update(id: number, updateKanbanBoardDto: UpdateKanbanBoardDto) {
-    return `This action updates a #${id} kanbanBoard`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} kanbanBoard`;
+  findAll(): Promise<KanbanBoard[]> {
+    return this.kanbanBoardRepository.find();
   }
 }
