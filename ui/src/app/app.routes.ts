@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'project/:id',
+    path: 'project/:projectId',
     component: KanbanBoardComponent,
   },
   {

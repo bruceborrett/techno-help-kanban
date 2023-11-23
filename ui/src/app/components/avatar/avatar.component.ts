@@ -11,4 +11,5 @@ import { NgOptimizedImage } from '@angular/common'
 })
 export class AvatarComponent {
   @Input() imageUrl!: string
+  @Input() size: number = 32
 }

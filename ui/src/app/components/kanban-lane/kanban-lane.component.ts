@@ -6,7 +6,7 @@ import { DragAndDropModule, DropEvent } from 'angular-draggable-droppable';
 export interface KanbanLane {
   id: number;
   title: string;
-  borderClass: string;
+  borderColor: string;
 }
 
 @Component({

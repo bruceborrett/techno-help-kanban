@@ -1,5 +1,5 @@
 import { Component, Input, Pipe, PipeTransform } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroSquares2x2, heroListBullet, heroPlus } from '@ng-icons/heroicons/outline';
@@ -7,11 +7,14 @@ import { heroSquares2x2, heroListBullet, heroPlus } from '@ng-icons/heroicons/ou
 import { KanbanLane, KanbanLaneComponent } from '../../components/kanban-lane/kanban-lane.component';
 import { KanbanCard, KanbanCardComponent } from '../../components/kanban-card/kanban-card.component';
 
+import { KanbanService } from '../../services/kanban.service';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
+
 export interface KanbanBoard {
   id: number
   title: string
-  lanes: KanbanLane[]
-  cards: KanbanCard[]
+  __lanes__: KanbanLane[]
+  __cards__: KanbanCard[]
 }
 
 @Pipe({
@@ -21,7 +24,7 @@ export interface KanbanBoard {
 export class LaneCardFilter implements PipeTransform {
   transform(value: KanbanCard[], laneId: number) {
     return value.filter((card) => {
-      return card.lane == laneId
+      return card.laneId == laneId
     });
   }
 }
@@ -31,7 +34,9 @@ export class LaneCardFilter implements PipeTransform {
   standalone: true,
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.css',
-  viewProviders: [provideIcons({ heroSquares2x2, heroListBullet, heroPlus })],
+  viewProviders: [
+    provideIcons({ heroSquares2x2, heroListBullet, heroPlus })
+  ],
   imports: [
     CommonModule,
     NgIconComponent,
@@ -39,8 +44,20 @@ export class LaneCardFilter implements PipeTransform {
     KanbanCardComponent,
     LaneCardFilter,
     NgFor,
+    NgIf,
+    SpinnerComponent
   ],
 })
 export class KanbanBoardComponent {
-  @Input() project!: KanbanBoard
+  constructor(private kanbanService: KanbanService) { }
+
+  project: KanbanBoard | null = null;
+
+  @Input()
+  set projectId(projectId: number) {
+    this.kanbanService.getProject(projectId).subscribe(async (project) => {
+      console.log(project);
+      this.project = project;
+    })
+  }
 }

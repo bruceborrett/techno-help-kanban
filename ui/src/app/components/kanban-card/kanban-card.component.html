@@ -1,3 +1,4 @@
-<div mwlDraggable [dropData]="card.id" class="bg-white w-full rounded border-t-4 {{borderClass}} p-2 cursor-move">
+<div mwlDraggable [dropData]="card.id" class="bg-white w-full rounded border-t-4 p-2 cursor-move" [style.borderColor]="borderColor">
   <p class="font-bold mb-4">{{card.title}}</p>
+  <app-avatar imageUrl="https://i.pravatar.cc/150?img=14" [size]="24" />
 </div>
