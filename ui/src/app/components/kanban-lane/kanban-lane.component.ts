@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { KanbanCard, KanbanCardComponent } from '../kanban-card/kanban-card.component';
 import { DragAndDropModule, DropEvent } from 'angular-draggable-droppable';
+import { KanbanService } from '../../services/kanban.service';
 
 export interface KanbanLane {
   id: number;
@@ -17,10 +18,12 @@ export interface KanbanLane {
   styleUrl: './kanban-lane.component.css'
 })
 export class KanbanLaneComponent {
+  constructor(private kanbanService: KanbanService) { }
+
   @Input() lane!: KanbanLane;
   @Input() cards?: KanbanCard[];
 
-  drop(laneId: number, cardId: number) {
-
+  drop(card: KanbanCard) {
+    this.kanbanService.moveCard(card.id, this.lane.id);
   }
 }

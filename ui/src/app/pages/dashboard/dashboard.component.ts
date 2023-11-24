@@ -13,5 +13,5 @@ import { RouterLink } from '@angular/router';
 export class DashboardComponent {
   constructor(private kanbanService: KanbanService) { }
 
-  projects = this.kanbanService.getProjects();
+  projects = this.kanbanService.projects();
 }

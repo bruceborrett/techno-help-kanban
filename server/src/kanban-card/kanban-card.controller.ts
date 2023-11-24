@@ -31,11 +31,6 @@ export class KanbanCardController {
     return this.kanbanCardService.findOne(+id);
   }
 
-  @Get('project/:projectId')
-  findByProject(@Param('projectId') projectId: string) {
-    return this.kanbanCardService.findByProject(+projectId);
-  }
-
   @Patch(':id')
   update(
     @Param('id') id: string,

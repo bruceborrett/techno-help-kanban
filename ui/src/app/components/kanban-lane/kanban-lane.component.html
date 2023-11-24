@@ -1,4 +1,4 @@
-<div mwlDroppable (drop)="drop(lane.id, $event.dropData)" class="flex flex-col w-72 bg-slate-200 h-screen p-2 rounded border-t-4 space-y-2" [style.borderColor]="lane.borderColor">
+<div mwlDroppable (drop)="drop($event.dropData)" class="flex flex-col w-72 bg-slate-200 min-h-screen p-2 rounded border-t-4 space-y-2" [style.borderColor]="lane.borderColor">
   <p class="font-bold mb-4">
     {{lane.title}}
     <span class="text-gray-400"> - {{cards?.length}}</span>

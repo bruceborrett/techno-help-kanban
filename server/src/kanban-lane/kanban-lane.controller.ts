@@ -14,9 +14,4 @@ export class KanbanLaneController {
   findOne(id: number) {
     return this.kanbanLaneService.findOne(id);
   }
-
-  @Get('project/:projectId')
-  findByProject(projectId: number) {
-    return this.kanbanLaneService.findByProject(projectId);
-  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { KanbanBoard } from '../pages/kanban-board/kanban-board.component';
-import { KanbanLane } from '../components/kanban-lane/kanban-lane.component';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { KanbanCard } from '../components/kanban-card/kanban-card.component';
 
 @Injectable({
@@ -12,19 +12,44 @@ export class KanbanService {
 
   constructor(private http: HttpClient) { }
 
-  getProjects() {
-    return this.http.get<KanbanBoard[]>(`${this.baseUrl}/kanban-board`)
+  private projects$ = new BehaviorSubject<KanbanBoard[]>([]);
+  private project$ = new BehaviorSubject<KanbanBoard | null>(null);
+  private error$ = new BehaviorSubject<string | null>(null);
+
+  error = this.error$.asObservable();
+
+  projects() {
+    this.http.get<KanbanBoard[]>(`${this.baseUrl}/kanban-board`).subscribe((projects) => {
+      this.projects$.next(projects);
+    })
+    return this.projects$.asObservable();
   }
 
-  getProject(projectId: number) {
-    return this.http.get<KanbanBoard>(`${this.baseUrl}/kanban-board/${projectId}`)
+  project(projectId: number) {
+    this.http.get<KanbanBoard>(`${this.baseUrl}/kanban-board/${projectId}`).subscribe((project) => {
+      this.project$.next(project);
+    })
+    return this.project$.asObservable();
   }
 
-  getLanes(projectId: number) {
-    return this.http.get<KanbanLane[]>(`${this.baseUrl}/kanban-lane/project/${projectId}`)
-  }
-
-  getCards(projectId: number) {
-    return this.http.get<KanbanCard[]>(`${this.baseUrl}/kanban-card/project/${projectId}`)
+  moveCard(cardId: number, laneId: number) {
+    const project = this.project$.getValue()
+    if (project) {
+      project.__cards__.forEach((c) => {
+        if (c.id === cardId) {
+          const oldLane = c.laneId;
+          c.laneId = laneId;
+          this.project$.next(project);
+          this.http.patch(`${this.baseUrl}/kanban-card/${c.id}`, c).pipe(
+            catchError((error: HttpErrorResponse) => {
+              this.error$.next(error.message);
+              c.laneId = oldLane;
+              this.project$.next(project);
+              return [];
+            })
+          ).subscribe();
+        }
+      })
+    }
   }
 }

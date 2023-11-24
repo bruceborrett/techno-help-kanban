@@ -1,8 +1,8 @@
-import { Component, Input, Pipe, PipeTransform } from '@angular/core';
+import { Component, ElementRef, Input, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroSquares2x2, heroListBullet, heroPlus } from '@ng-icons/heroicons/outline';
+import { heroSquares2x2, heroListBullet, heroPlus, heroXMark } from '@ng-icons/heroicons/outline';
 
 import { KanbanLane, KanbanLaneComponent } from '../../components/kanban-lane/kanban-lane.component';
 import { KanbanCard, KanbanCardComponent } from '../../components/kanban-card/kanban-card.component';
@@ -19,7 +19,8 @@ export interface KanbanBoard {
 
 @Pipe({
   name: 'laneCardFilter',
-  standalone: true
+  standalone: true,
+  pure: false
 })
 export class LaneCardFilter implements PipeTransform {
   transform(value: KanbanCard[], laneId: number) {
@@ -35,7 +36,7 @@ export class LaneCardFilter implements PipeTransform {
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.css',
   viewProviders: [
-    provideIcons({ heroSquares2x2, heroListBullet, heroPlus })
+    provideIcons({ heroSquares2x2, heroListBullet, heroPlus, heroXMark })
   ],
   imports: [
     CommonModule,
@@ -45,18 +46,31 @@ export class LaneCardFilter implements PipeTransform {
     LaneCardFilter,
     NgFor,
     NgIf,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class KanbanBoardComponent {
-  constructor(private kanbanService: KanbanService) { }
+  constructor(private kanbanService: KanbanService) {}
 
   project: KanbanBoard | null = null;
+  error: string | null = null;
+
+  @ViewChild('modal') modal!: ElementRef<HTMLDialogElement>;
 
   @Input()
   set projectId(projectId: number) {
-    this.kanbanService.getProject(projectId).subscribe(async (project) => {
+    this.kanbanService.project(projectId).subscribe(async (project) => {
       this.project = project;
     })
   }
+
+  ngAfterViewInit() {
+    this.kanbanService.error.subscribe((error) => {
+      if (error) {
+        this.error = error;
+        this.modal.nativeElement.showModal();
+      }
+    })
+  }
+
 }
