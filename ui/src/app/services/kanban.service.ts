@@ -37,11 +37,15 @@ export class KanbanService {
     if (project) {
       project.__cards__.forEach((c) => {
         if (c.id === cardId) {
+          // Store old lane in case of server error
           const oldLane = c.laneId;
           c.laneId = laneId;
+          // Optimistically update the UI
           this.project$.next(project);
+          // Update the card on the server
           this.http.patch(`${this.baseUrl}/kanban-card/${c.id}`, c).pipe(
             catchError((error: HttpErrorResponse) => {
+              // Restore old lane and show error
               this.error$.next(error.message);
               c.laneId = oldLane;
               this.project$.next(project);
