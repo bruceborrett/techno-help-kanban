@@ -34,7 +34,7 @@ export class KanbanCardService implements OnModuleInit {
   }
 
   async create(card: CreateKanbanCardDto) {
-    await this.kanbanCardRepository.save(card);
+    return await this.kanbanCardRepository.save(card);
   }
 
   async update(id: number, card: UpdateKanbanCardDto) {
