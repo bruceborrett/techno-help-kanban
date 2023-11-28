@@ -59,7 +59,7 @@ export class KanbanBoardComponent {
   project: KanbanBoard | null = null;
   error: string | null = null;
 
-  @ViewChild('ErrorModal') ErrorModal!: ElementRef<HTMLDialogElement>;
+  @ViewChild('ErrorModal') ErrorModal!: ModalComponent;
 
   @Input()
   set projectId(projectId: number) {
@@ -72,7 +72,7 @@ export class KanbanBoardComponent {
     this.kanbanService.error.subscribe((error) => {
       if (error) {
         this.error = error;
-        this.ErrorModal.nativeElement.show();
+        this.ErrorModal.show();
       }
     })
   }
