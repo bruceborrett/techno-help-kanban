@@ -7,5 +7,5 @@
     <p class="text-xs text-gray-400">Start: {{card.startDate | date}}</p>
     <p class="text-xs text-gray-400">Due: {{card.dueDate | date}}</p>
   </div>
-  <app-avatar imageUrl="https://i.pravatar.cc/150?img=14" [size]=24 />
+  <app-avatar imageUrl="https://i.pravatar.cc/150?img={{card.assigneeId}}" [size]=24 />
 </div>
