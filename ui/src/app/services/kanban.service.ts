@@ -32,6 +32,18 @@ export class KanbanService {
     return this.project$.asObservable();
   }
 
+  createCard(card: Omit<KanbanCard, 'id'>) {
+    const apiCall = this.http.post<KanbanCard>(`${this.baseUrl}/kanban-card`, card);
+    apiCall.subscribe((card) => {
+      const project = this.project$.getValue();
+      if (project) {
+        project.__cards__.push(card);
+        this.project$.next(project);
+      }
+    });
+    return apiCall;
+  }
+
   moveCard(cardId: number, laneId: number) {
     const project = this.project$.getValue()
     if (project) {
