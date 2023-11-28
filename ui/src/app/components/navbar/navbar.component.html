@@ -1,14 +1,14 @@
 <nav class="w-full flex justify-between">
   <div class="flex">
-    <button class="bg-none b-none p-4 mx-2 text-slate-400">
+    <a routerLink="/" class="bg-none b-none p-4 mx-2 text-slate-400">
       <ng-icon name="heroArrowLeft"></ng-icon>
-    </button>
+    </a>
     <div class="border-r my-3"></div>
     <div class="mx-4 my-2">
       <app-project-selector />
     </div>
   </div>
-  <div class="mx-4 my-2">
-    <app-avatar imageUrl="https://i.pravatar.cc/150?img=14" [size]=40 />
-  </div>
+  <a routerLink="/profile" class="mx-4 my-2">
+    <app-avatar imageUrl="https://i.pravatar.cc/150?img={{currentUser.id}}" [size]=40 />
+  </a>
 </nav>

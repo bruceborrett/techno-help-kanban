@@ -9,7 +9,7 @@ export class UserService {
 
   currentUser() {
     return {
-      id: 1,
+      id: 14,
       name: 'John Doe',
       avatarUrl: 'https://i.pravatar.cc/150?img=14'
     }
@@ -18,7 +18,7 @@ export class UserService {
   users() {
     return [
       {
-        id: 1,
+        id: 14,
         name: 'John Doe',
         avatarUrl: 'https://i.pravatar.cc/150?img=14'
       },
