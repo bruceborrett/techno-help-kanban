@@ -24,7 +24,7 @@ export class KanbanCreateCardComponent {
   @Output() submitDone: EventEmitter<void> = new EventEmitter<void>();
 
   form = new FormGroup({
-    title: new FormControl('', {nonNullable: true}),
+    title: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     description: new FormControl('', {nonNullable: true}),
     dueDate: new FormControl('', {nonNullable: true}),
     startDate: new FormControl('', {nonNullable: true}),
@@ -36,6 +36,25 @@ export class KanbanCreateCardComponent {
   });
 
   users = this.userService.users();
+
+  tags() {
+    return this.form.get('tags') as FormArray;
+  }
+
+  addTag(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const text = (event.target as HTMLInputElement).value;
+      if (text) {
+        this.tags().push(new FormControl(text, { nonNullable: true }));
+        (event.target as HTMLInputElement).value = '';
+      }
+    }
+  }
+
+  removeTag(index: number) {
+    this.tags().removeAt(index);
+  }
 
   submit() {
     const card: Omit<KanbanCard, 'id'> = this.form.getRawValue()
