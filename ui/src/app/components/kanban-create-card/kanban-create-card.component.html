@@ -1,0 +1,20 @@
+<h2 class="text-lg font-bold">Create New Work Item</h2>
+<hr class="my-4" />
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <input type="text" class="w-full p-2 mb-2 border rounded" placeholder="Title" formControlName="title" />
+  <textarea class="w-full p-2 mb-1 border rounded" placeholder="Description" formControlName="description"></textarea>
+  <input type="date" class="w-full p-2 mb-2 border rounded" placeholder="Start Date" formControlName="startDate" />
+  <input type="date" class="w-full p-2 mb-2 border rounded" placeholder="Due Date" formControlName="dueDate" />
+
+  <select class="w-full p-2 mb-2 border rounded bg-none" formControlName="assigneeId">
+    <option value="0">Assignee</option>
+    <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+  </select>
+
+  <input type="text" class="w-full p-2 mb-2 border rounded" placeholder="Tags" formArrayName="tags" />
+
+  <button class="bg-sky-200 rounded px-4 py-2 text-sky-500 font-bold align-top">
+    Create
+  </button>
+</form>

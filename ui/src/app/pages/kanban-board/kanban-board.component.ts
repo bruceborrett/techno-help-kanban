@@ -6,9 +6,11 @@ import { heroSquares2x2, heroListBullet, heroPlus, heroXMark } from '@ng-icons/h
 
 import { KanbanLane, KanbanLaneComponent } from '../../components/kanban-lane/kanban-lane.component';
 import { KanbanCard, KanbanCardComponent } from '../../components/kanban-card/kanban-card.component';
+import { KanbanCreateCardComponent } from '../../components/kanban-create-card/kanban-create-card.component';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 import { KanbanService } from '../../services/kanban.service';
-import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 export interface KanbanBoard {
   id: number
@@ -43,10 +45,12 @@ export class LaneCardFilter implements PipeTransform {
     NgIconComponent,
     KanbanLaneComponent,
     KanbanCardComponent,
+    SpinnerComponent,
+    KanbanCreateCardComponent,
+    ModalComponent,
     LaneCardFilter,
     NgFor,
     NgIf,
-    SpinnerComponent,
   ],
 })
 export class KanbanBoardComponent {
@@ -55,7 +59,7 @@ export class KanbanBoardComponent {
   project: KanbanBoard | null = null;
   error: string | null = null;
 
-  @ViewChild('modal') modal!: ElementRef<HTMLDialogElement>;
+  @ViewChild('ErrorModal') ErrorModal!: ElementRef<HTMLDialogElement>;
 
   @Input()
   set projectId(projectId: number) {
@@ -68,7 +72,7 @@ export class KanbanBoardComponent {
     this.kanbanService.error.subscribe((error) => {
       if (error) {
         this.error = error;
-        this.modal.nativeElement.showModal();
+        this.ErrorModal.nativeElement.show();
       }
     })
   }
