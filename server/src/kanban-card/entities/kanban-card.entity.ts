@@ -28,5 +28,8 @@ export class KanbanCard {
   dueDate: Date;
 
   @Column()
-  assignee: string;
+  assigneeId: number;
+
+  @Column('simple-array')
+  tags: string[];
 }

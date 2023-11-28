@@ -8,10 +8,13 @@ export interface KanbanCard {
   id: number;
   title: string;
   laneId: number;
+  projectId: number;
   assigneeId: number;
   description: string;
   dueDate: string;
   startDate: string;
+  tags: string[];
+  order: number;
 }
 
 @Component({
@@ -24,12 +27,6 @@ export interface KanbanCard {
 export class KanbanCardComponent {
   @Input() card!: KanbanCard;
   @Input() borderColor!: string;
-
-  tags = [
-    'bug',
-    'feature',
-    'enhancement',
-  ]
 
   dragEnd(ev: DragEndEvent) {
     console.log(ev)

@@ -6,5 +6,6 @@ export class CreateKanbanCardDto {
   order: number;
   startDate: Date;
   dueDate: Date;
-  assignee: string;
+  assigneeId: number;
+  tags: string[];
 }

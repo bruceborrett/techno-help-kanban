@@ -1,7 +1,7 @@
 <div mwlDraggable [dropData]="card" class="bg-white w-full rounded border-t-4 p-2 cursor-move" [style.borderColor]="borderColor">
   <p class="text-gray-600 font-bold mb-4">{{card.title}}</p>
   <div class="mb-4">
-    <app-tag *ngFor="let tag of tags">{{tag}}</app-tag>
+    <app-tag *ngFor="let tag of card.tags">{{tag}}</app-tag>
   </div>
   <div class="text-right">
     <p class="text-xs text-gray-400">Start: {{card.startDate | date}}</p>
